@@ -1,0 +1,19 @@
+link to survey: https://forms.office.com/e/UUeetLyEXD
+
+Section 1: Getting to know you
+1. How old are you?
+2. Where are you from?
+3. What is your working occupation?
+4. What is your work schedule?
+5. To what extend are you familiar with remote working?
+
+Section 2: Lets talk about remote work
+1. What do you think are the benefits of working from home?
+2. Have you faced any challenges? If yes, please specify
+3. Do you work alone or with others?
+4. How well do you know your colleagues?
+5. Do you think there is a gap in the communication between collegues? If yes, why?
+6. Do you know any virtual activities or events that help you stay connected with your collegues? If yes, please specify
+7. How important it is to have a good relationship with your collegues?
+8. What do you think would be the most effective way to increase interaction between remote team members?
+9. How interested would you be in a fun gamified application, as a part of your work flow in order to strengthen the bond between colleagues?
