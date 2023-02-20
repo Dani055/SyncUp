@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+
 
 module.exports = (req, res, next) => {
   const authHeaders = req.get('Authorization');
@@ -7,20 +7,8 @@ module.exports = (req, res, next) => {
       .json({ message: 'Not authenticated.' })
   }
 
-  const token = req.get('Authorization').split(' ')[1];
-  let decodedToken;
-  try {
-    decodedToken = jwt.verify(token, 'somesupersecret')
-  } catch(error) {
-    return res.status(401)
-      .json({ message: 'Token is invalid.', error });
-  }
+  const userId = req.get('Authorization').split(' ')[1];
 
-  if (!decodedToken) {
-    return res.status(401)
-      .json({ message: 'Not authenticated.' });
-  }
-
-  req.userId = decodedToken.userId;
+  req.userId = userId;
   next();
 };

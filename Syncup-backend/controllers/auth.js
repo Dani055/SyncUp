@@ -26,5 +26,23 @@ module.exports = {
 
         next(error);
       })
+  },
+  getLeaderBoard: async (req, res, next) => {
+    try {
+      const users = await User.find()
+      const sortedUsers = users.sort((u1, u2)=> (u1.points > u2.points) ? -1 : ((u2.points > u1.points) ? 1 : 0))
+      res.status(200)
+      .json({
+        message: 'Fetched leaderboard',
+        sortedUsers
+      })
+
+    } catch (error) {
+      if (!error.statusCode) {
+        error.statusCode = 500;
+      }
+      next(error);
+    }
+    
   }
 };
