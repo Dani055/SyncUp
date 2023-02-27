@@ -3,12 +3,12 @@ const User = require('../models/User');
 
 module.exports = {
   signIn: (req, res, next) => {
-    const { username } = req.body;
+    const { email } = req.body;
 
-    User.findOne({ username })
+    User.findOne({ email })
       .then((user) => {
         if (!user) {
-          const error = new Error('Wrong username or password!');
+          const error = new Error('Wrong email or password!');
           error.statusCode = 401;
           throw(error);
         }

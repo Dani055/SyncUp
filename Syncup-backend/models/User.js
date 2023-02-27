@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  username: {
+  email: {
     type: Schema.Types.String,
     required: true
   },
@@ -29,7 +29,7 @@ User.seedAdminUser = async () => {
     let users = await User.find();
     if (users.length > 0) return;
     return User.create({
-      username: 'Admin',
+      email: 'admin@admin.com',
       firstName: 'Admin4o',
       lastName: 'Adminov',
       profileImageUrl: "",
