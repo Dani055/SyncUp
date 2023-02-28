@@ -1,12 +1,12 @@
 package com.example.syncup_android.ui.screens
 
-import android.graphics.Outline
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -21,6 +21,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.syncup_android.R
+import com.example.syncup_android.api.repository.BingoRepository
 import com.example.syncup_android.data.onboardPages
 import com.example.syncup_android.ui.components.OnboardingPageUI
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -34,7 +35,7 @@ import kotlinx.coroutines.launch
 fun OnboardingScreen (onGetStartedClick: () -> Unit, modifier: Modifier = Modifier){
     val pagerState = rememberPagerState(initialPage = 0);
     val scope = rememberCoroutineScope();
-
+    val bingoRepo = BingoRepository()
     Column(modifier = modifier.fillMaxSize()) {
         Image(modifier = Modifier.fillMaxWidth(),contentScale = ContentScale.Crop, painter = painterResource(R.drawable.onboardingbg), contentDescription = null)
         HorizontalPager(count = 3, state = pagerState, modifier = Modifier.fillMaxWidth()) {

@@ -6,9 +6,23 @@ module.exports = {
   getActivities: async (req, res, next) => {
     try {
     let activities = await Activity.find()
+    let newActivites = []
+    let submission = null;
+    for(let activity of activities){
+      submission = await Submission.findOne({completedBy: req.userId, activity: activity._id});
+      let newActivity = {...activity._doc}
+      if(submission != null){
+        newActivity["isCompleted"] = true;
+      }
+      else{
+        newActivity["isCompleted"] = false;
+      }
+      newActivites.push(newActivity)
+    }
+
       res
           .status(200)
-          .json({ message: 'Fetched activities', activities });
+          .json({ message: 'Fetched activities', activities: newActivites });
       
     } catch (error) {
       if (!error.statusCode) {
@@ -20,14 +34,15 @@ module.exports = {
   getActivityById: async (req, res, next) => {
     try {
     let activity = await Activity.findById(req.params.activityId)
-    let submission = await Submission.findOne({completedBy: req.userId, activity: activity._id})
-    const isCompleted = false;
+    let submission = await Submission.findOne({completedBy: req.userId, activity: activity._id}).populate("completedBy").populate("activity")
+    
+    let isCompleted = false;
     if(submission != null){
-      activity.isCompleted = true;
+      isCompleted = true;
     }
       res
           .status(200)
-          .json({ message: 'Fetched activity', activity,isCompleted, mySybmission: submission });
+          .json({ message: 'Fetched activity', activity, isCompleted, mySubmission: submission });
       
     } catch (error) {
       if (!error.statusCode) {
@@ -39,7 +54,7 @@ module.exports = {
   getSubmissionsForActivity: async (req, res, next) => {
     try {
     let activity = await Activity.findById(req.params.activityId)
-    let submissions = await Submission.find({activity: activity._id})
+    let submissions = await Submission.find({activity: activity._id}).populate("completedBy").populate("activity")
       res
           .status(200)
           .json({ message: 'Fetched submissions for activity', submissions });
@@ -53,7 +68,7 @@ module.exports = {
   },
   createSubmission: async (req, res, next) => {
     try {
-      const submissionObj = req.body;
+      const submissionObj = {"evidenceUrl": req.body.evidenceUrl, "activity": req.body.activityId}
       submissionObj.completedBy = req.userId;
       let submission = await Submission.create(submissionObj)
       let user = await User.findById(req.userId)

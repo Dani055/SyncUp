@@ -1,11 +1,11 @@
 package com.example.syncup_android.data.res
 
-import com.example.syncup_android.data.model.User
+import com.example.syncup_android.data.model.Activity
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class SignInResponse(
+data class GetActivitiesResponse(
     @JsonProperty("message")
     val message: String,
-    @JsonProperty("user")
-    val user: User
+    @JsonProperty("activities")
+    val activities: List<Activity>
 )
