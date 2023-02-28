@@ -45,7 +45,10 @@ fun LoginScreen (snackBar: SnackbarHostState, onLoginClicked: () -> Unit, modifi
         .fillMaxSize()) {
         Image(modifier = Modifier.fillMaxWidth(), contentScale = ContentScale.Crop, painter = painterResource(id = R.drawable.loginbg), contentDescription = null)
         Column(modifier = Modifier.padding(start = 50.dp, end = 50.dp, bottom = 24.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-            OutlinedTextField(modifier = Modifier.fillMaxWidth().padding(top = 15.dp), label = { Text(color = MaterialTheme.colorScheme.primary, text = "Email")}, value = loginUIState.email, onValueChange = {loginViewModel.changeUsername(it)},
+            Spacer(modifier = Modifier.weight(1f))
+            OutlinedTextField(colors = TextFieldDefaults.outlinedTextFieldColors(unfocusedBorderColor = MaterialTheme.colorScheme.primary), modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 15.dp), label = { Text(color = MaterialTheme.colorScheme.primary, text = "Email")}, value = loginUIState.email, onValueChange = {loginViewModel.changeUsername(it)},
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next
                 ),
@@ -53,7 +56,7 @@ fun LoginScreen (snackBar: SnackbarHostState, onLoginClicked: () -> Unit, modifi
                     onNext = { focusManager.moveFocus(FocusDirection.Down) }
                 )
             )
-            OutlinedTextField(modifier = Modifier
+            OutlinedTextField(colors = TextFieldDefaults.outlinedTextFieldColors(unfocusedBorderColor = MaterialTheme.colorScheme.primary), modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 5.dp), label = { Text(color = MaterialTheme.colorScheme.primary, text = "Password")}, value = loginUIState.password, onValueChange = {loginViewModel.changePassword(it)},
                 keyboardOptions = KeyboardOptions(
@@ -68,7 +71,7 @@ fun LoginScreen (snackBar: SnackbarHostState, onLoginClicked: () -> Unit, modifi
                 .fillMaxWidth()
                 .padding(top = 5.dp, end = 12.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Checkbox(modifier = Modifier.padding(0.dp), checked = loginUIState.rememberMe, onCheckedChange = {loginViewModel.changeRememberMe()})
+                    Checkbox(colors = CheckboxDefaults.colors(uncheckedColor = MaterialTheme.colorScheme.primary), modifier = Modifier.padding(0.dp), checked = loginUIState.rememberMe, onCheckedChange = {loginViewModel.changeRememberMe()})
                     ClickableText(style = TextStyle(fontSize = 13.sp, color = MaterialTheme.colorScheme.primary), text = AnnotatedString(
                         "Remember me"), onClick = {loginViewModel.changeRememberMe()})
                 }

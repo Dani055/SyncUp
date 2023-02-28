@@ -9,7 +9,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.syncup_android.R
 import com.example.syncup_android.data.OnboardingPage
@@ -17,7 +19,7 @@ import com.example.syncup_android.data.OnboardingPage
 @Composable
 fun OnboardingPageUI(onboardingPage: OnboardingPage) {
     Column(modifier = Modifier.padding(horizontal = 50.dp),horizontalAlignment = Alignment.CenterHorizontally) {
-        Image(painter = painterResource(id = onboardingPage.image), contentDescription = null)
-        Text(color = MaterialTheme.colorScheme.primary, text = onboardingPage.description)
+        Image(modifier = Modifier.padding(top = 30.dp), painter = painterResource(id = onboardingPage.image), contentDescription = null)
+        Text(textAlign = TextAlign.Center, modifier = Modifier.align(Alignment.CenterHorizontally), color = MaterialTheme.colorScheme.primary, text = onboardingPage.description)
     }
 }

@@ -7,6 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -35,7 +36,7 @@ fun MainApplicationScaffold (currentScreen: NavRoutes, navController: NavHostCon
         NavRoutes.Login -> false;
         else -> true
     }
-    Scaffold(
+    Scaffold(modifier = Modifier.navigationBarsPadding(),
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState){data ->
                 val isError = (data.visuals as? SnackbarVisualsWithError)?.isError ?: false
