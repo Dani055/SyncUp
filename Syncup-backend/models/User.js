@@ -12,6 +12,9 @@ const userSchema = new Schema({
   lastName: {
     type: Schema.Types.String
   },
+  position: {
+    type: Schema.Types.String
+  },
   profileImageUrl: {
     type: Schema.Types.String
   },
@@ -32,6 +35,7 @@ User.seedAdminUser = async () => {
       email: 'admin@admin.com',
       firstName: 'Admin4o',
       lastName: 'Adminov',
+      position: 'Team leader',
       profileImageUrl: "",
       points: 123,
       roles: ['Admin']

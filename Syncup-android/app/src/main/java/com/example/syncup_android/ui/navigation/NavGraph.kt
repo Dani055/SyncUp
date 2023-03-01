@@ -18,6 +18,7 @@ import com.example.syncup_android.ui.screens.OnboardingScreen
 @Composable
 fun NavGraph(modifier: Modifier = Modifier, navController: NavHostController, innerPadding: PaddingValues, snackBar: SnackbarHostState) {
     NavHost(
+        modifier = Modifier.padding(paddingValues = innerPadding),
         navController = navController,
         startDestination = NavRoutes.Onboarding.name
     )
