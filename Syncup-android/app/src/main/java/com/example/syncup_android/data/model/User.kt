@@ -11,9 +11,9 @@ data class User(
     val email: String,
     @JsonProperty("firstName")
     val firstName: String,
-    @JsonProperty("lastName")
-    val position: String,
     @JsonProperty("position")
+    val position: String,
+    @JsonProperty("lastName")
     val lastName: String,
     @JsonProperty("profileImageUrl")
     val profileImageUrl: String,

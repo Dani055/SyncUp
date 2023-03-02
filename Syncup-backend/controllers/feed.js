@@ -51,13 +51,12 @@ module.exports = {
       next(error);
     }
   },
-  getSubmissionsForActivity: async (req, res, next) => {
+  getSubmissionsForBingo: async (req, res, next) => {
     try {
-    let activity = await Activity.findById(req.params.activityId)
-    let submissions = await Submission.find({activity: activity._id}).populate("completedBy").populate("activity")
+    let submissions = await Submission.find().populate("completedBy").populate("activity")
       res
           .status(200)
-          .json({ message: 'Fetched submissions for activity', submissions });
+          .json({ message: 'Fetched submissions for bingo', submissions });
       
     } catch (error) {
       if (!error.statusCode) {

@@ -6,6 +6,9 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
@@ -56,6 +59,16 @@ fun MainApplicationScaffold (currentScreen: NavRoutes, navController: NavHostCon
                     Text(data.visuals.message)
                 }
             }
+        },
+        floatingActionButton = {
+             if(currentScreen.name == NavRoutes.Games.name){
+                 FloatingActionButton(onClick = { /*TODO*/ }, modifier = Modifier.padding(10.dp), containerColor = MaterialTheme.colorScheme.inversePrimary, shape = RoundedCornerShape(16.dp),) {
+                     androidx.compose.material.Icon(
+                         imageVector = Icons.Default.Add,
+                         contentDescription = "Add game"
+                     )
+                 }
+             }
         },
         topBar = { AnimatedVisibility(visible = showTopBar) {
                 TopBar(currentScreen = currentScreen, onNavigationIconClick = {})

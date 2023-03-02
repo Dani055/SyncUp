@@ -3,10 +3,7 @@ package com.example.syncup_android.api.interfaces
 import com.example.syncup_android.api.ApiConstants
 import com.example.syncup_android.data.UserContext
 import com.example.syncup_android.data.req.CreateSubmissionRequest
-import com.example.syncup_android.data.res.CreateSubmissionResponse
-import com.example.syncup_android.data.res.GetActivitiesResponse
-import com.example.syncup_android.data.res.GetActivityByIdResponse
-import com.example.syncup_android.data.res.GetSubmissionsForActivityResponse
+import com.example.syncup_android.data.res.*
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Response
@@ -22,10 +19,9 @@ interface BingoApi {
     suspend fun getActivities(
     ) : Response<GetActivitiesResponse>
 
-    @GET("/feed/activities/{activityId}/submissions")
+    @GET("/feed/bingo/submissions")
     suspend fun getSubmissionsForActivity(
-        @Path("activityId") activityId: String
-    ) : Response<GetSubmissionsForActivityResponse>
+    ) : Response<GetSubmissionsForBingoResponse>
 
     @POST("/feed/submission")
     suspend fun createSubmission(

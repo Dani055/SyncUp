@@ -93,6 +93,7 @@ fun SyncupandroidTheme(
 
     MaterialTheme(
         colorScheme = colors,
+        typography = Typography,
         content = content,
         shapes = Shapes
     )
