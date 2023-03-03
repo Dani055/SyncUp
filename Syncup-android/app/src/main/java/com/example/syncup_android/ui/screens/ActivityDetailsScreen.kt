@@ -6,7 +6,7 @@ import androidx.navigation.NavController
 import com.example.syncup_android.permissions.CheckAndRequestCameraPermission
 
 @Composable
-fun MySubmissionScreen (navController: NavController, activityId: String?){
+fun ActivityDetailsScreen (navController: NavController, activityId: String?){
     CheckAndRequestCameraPermission()
     Text(text = activityId!!)
 }

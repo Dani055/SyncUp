@@ -119,7 +119,7 @@ fun BingoGame(navController: NavController, scope: CoroutineScope,playBingoViewM
     val totalPoints = bingoUIState.activities.sumOf { it.points }
 
     val onAddSubmissionClick = { activityId: String ->
-        navController.navigate("${NavRoutes.MySubmission.name}/$activityId"){
+        navController.navigate("${NavRoutes.ActivityDetails.name}/$activityId"){
             launchSingleTop = true
         }
     }
