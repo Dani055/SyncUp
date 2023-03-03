@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 fun BottomNavBar (currentScreen: NavRoutes, onNavigationIconClick: (String) -> Unit) {
     NavigationBar(containerColor = MaterialTheme.colorScheme.primaryContainer) {
         enumValues<NavRoutes>().forEach {
-            if (it != NavRoutes.Login && it != NavRoutes.Onboarding) {
+            if (it == NavRoutes.Home || it == NavRoutes.Games || it == NavRoutes.Profile) {
                 NavigationBarItem(
                     icon = { Icon(imageVector = if (currentScreen.name == it.name) it.seletedIcon else it.icon, modifier = Modifier.size(28.dp), contentDescription = it.title) },
                     selected = currentScreen.name == it.name,

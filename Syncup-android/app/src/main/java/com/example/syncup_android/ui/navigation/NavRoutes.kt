@@ -12,5 +12,6 @@ enum class NavRoutes(val title: String, val icon: ImageVector, val seletedIcon: 
     Login(title="Login", icon = Icons.Default.Star, seletedIcon = Icons.Default.Star),
     Home(title="Home", icon = Icons.Outlined.Home, seletedIcon = Icons.Default.Home),
     Games(title="Games", icon = Icons.Outlined.Groups, seletedIcon = Icons.Default.Groups),
+    PlayGame(title="House Bingo", icon = Icons.Outlined.Groups, seletedIcon = Icons.Default.Groups),
     Profile(title="Profile", icon = Icons.Outlined.AccountCircle, seletedIcon = Icons.Default.Home),
 }

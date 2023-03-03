@@ -19,6 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import com.example.syncup_android.R
 import com.example.syncup_android.api.repository.AuthRepository
@@ -44,9 +45,9 @@ fun HomeScreen (modifier: Modifier = Modifier){
                     Text(style = MaterialTheme.typography.titleLarge, text = "Welcome back, ${UserContext.loggedUser?.firstName}")
                     Text(style = MaterialTheme.typography.bodyMedium, text = "${UserContext.loggedUser?.position}")
                 }
-                Image(contentScale = ContentScale.Crop, modifier = Modifier
+                AsyncImage(contentScale = ContentScale.Crop, modifier = Modifier
                     .size(70.dp)
-                    .clip(CircleShape), painter = rememberAsyncImagePainter(UserContext.loggedUser?.profileImageUrl), contentDescription = "Your profile picture")
+                    .clip(CircleShape), model = UserContext.loggedUser?.profileImageUrl, contentDescription = "Your profile picture")
             }
         }
             Box(modifier = Modifier
