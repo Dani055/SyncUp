@@ -39,6 +39,7 @@ import coil.compose.rememberAsyncImagePainter
 import com.example.syncup_android.data.UserContext
 import com.example.syncup_android.data.model.Activity
 import com.example.syncup_android.data.model.Submission
+import com.example.syncup_android.ui.navigation.NavRoutes
 import com.example.syncup_android.ui.navigation.SnackbarVisualsWithError
 import com.example.syncup_android.viewmodel.LoginViewModel
 import com.example.syncup_android.viewmodel.PlayBingoViewModel
@@ -90,7 +91,7 @@ fun PlayGameScreen (navController: NavController){
             verticalAlignment = Alignment.Top,
         ) {
             if(pagerState.currentPage == 0) {
-                BingoGame(scope = scope)
+                BingoGame(navController = navController, scope = scope)
             }
             else{
                 TeamSubmissions(scope = scope)
@@ -100,7 +101,7 @@ fun PlayGameScreen (navController: NavController){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BingoGame(scope: CoroutineScope,playBingoViewModel: PlayBingoViewModel = viewModel()){
+fun BingoGame(navController: NavController, scope: CoroutineScope,playBingoViewModel: PlayBingoViewModel = viewModel()){
     val bingoUIState by playBingoViewModel.uiState.collectAsState()
 
     LaunchedEffect(Unit){
@@ -117,6 +118,12 @@ fun BingoGame(scope: CoroutineScope,playBingoViewModel: PlayBingoViewModel = vie
     val earnedPoints = completedActivities.sumOf {it.points }
     val totalPoints = bingoUIState.activities.sumOf { it.points }
 
+    val onAddSubmissionClick = { activityId: String ->
+        navController.navigate("${NavRoutes.MySubmission.name}/$activityId"){
+            launchSingleTop = true
+        }
+    }
+
     Card(modifier = Modifier
         .fillMaxSize()
         ) {
@@ -126,7 +133,7 @@ fun BingoGame(scope: CoroutineScope,playBingoViewModel: PlayBingoViewModel = vie
         LazyVerticalGrid(modifier = Modifier.padding(vertical = 20.dp, horizontal = 20.dp), columns = GridCells.Fixed(2), verticalArrangement = Arrangement.spacedBy(20.dp),
             horizontalArrangement = Arrangement.spacedBy(20.dp),  content = {
             items(bingoUIState.activities.size){ index ->
-                BingoActivityCard(activity = bingoUIState.activities[index] , index = index)
+                BingoActivityCard(activity = bingoUIState.activities[index] , index = index, onAddSubmissionClick = onAddSubmissionClick)
             }
         })
     }
@@ -158,7 +165,7 @@ fun TeamSubmissions(scope: CoroutineScope,playBingoViewModel: PlayBingoViewModel
 }
 
 @Composable
-fun BingoActivityCard(activity: Activity, index: Int){
+fun BingoActivityCard(activity: Activity, index: Int, onAddSubmissionClick: (String) -> Unit){
     Column(modifier = Modifier.background(shape = RoundedCornerShape(15.dp), color = MaterialTheme.colorScheme.onPrimary)) {
         Column(modifier = Modifier
             .padding(15.dp)
@@ -176,7 +183,7 @@ fun BingoActivityCard(activity: Activity, index: Int){
             Spacer(modifier = Modifier.weight(1f))
             Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 Spacer(modifier = Modifier.weight(1f))
-                ClickableText(style = TextStyle(color = MaterialTheme.colorScheme.primary), text = AnnotatedString("Add"), onClick = {})
+                ClickableText(style = TextStyle(color = MaterialTheme.colorScheme.primary), text = AnnotatedString("Add"), onClick = {onAddSubmissionClick(activity.id)})
             }
         }
     }

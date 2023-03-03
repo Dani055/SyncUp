@@ -22,12 +22,11 @@ class PermissionChecker : IPermissionChecker{
 }
 
 @Composable
-fun CheckAndRequestLocationPermission() {
+fun CheckAndRequestCameraPermission() {
     val context = LocalContext.current
     val pc : IPermissionChecker = PermissionChecker();
     val permissions = arrayOf(
-        Manifest.permission.ACCESS_FINE_LOCATION,
-        Manifest.permission.ACCESS_COARSE_LOCATION
+        Manifest.permission.CAMERA,
     )
     if(!pc.checkMultiplePermissions(context = context, permissions = permissions)){
         //Either display message to go allow permissions or request them

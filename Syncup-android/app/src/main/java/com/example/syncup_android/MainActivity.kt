@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.syncup_android.permissions.CheckAndRequestCameraPermission
 import com.example.syncup_android.ui.navigation.MainApplicationScaffold
 import com.example.syncup_android.ui.navigation.NavRoutes
 import com.example.syncup_android.ui.theme.SyncupandroidTheme
@@ -39,8 +40,12 @@ fun SyncupApp(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
     val backStackEntry by navController.currentBackStackEntryAsState()
     val scope =  rememberCoroutineScope()
+
+    val fullBackstackRoute = backStackEntry?.destination?.route ?: NavRoutes.Onboarding.name
+    val indexOfSlash = fullBackstackRoute.indexOf("/")
+    val backStackRoute = if(indexOfSlash >= 0) fullBackstackRoute.substring(0, indexOfSlash) else fullBackstackRoute
     val currentScreen = NavRoutes.valueOf(
-        backStackEntry?.destination?.route ?: NavRoutes.Onboarding.name
+        backStackRoute
     )
 
     MainApplicationScaffold(

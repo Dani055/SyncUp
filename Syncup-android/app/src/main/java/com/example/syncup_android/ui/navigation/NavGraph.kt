@@ -36,6 +36,9 @@ fun NavGraph(modifier: Modifier = Modifier, navController: NavHostController, in
         composable(route = NavRoutes.PlayGame.name) {
             PlayGameScreen(navController = navController)
         }
+        composable("${NavRoutes.MySubmission.name}/{activityId}") {
+            MySubmissionScreen(navController = navController, activityId = it.arguments?.getString("activityId"))
+        }
     }
 
 }
