@@ -19,6 +19,11 @@ class BingoRepository(private val resInterceptor: ResponseInterceptor = Response
         resInterceptor.interceptError(response)
         return response.body()!!
     }
+    suspend fun getSubmissionsForLoggedUser() : GetSubmissionsForBingoResponse {
+        val response = BingoApi.instance.getSubmissionsForLoggedUser()
+        resInterceptor.interceptError(response)
+        return response.body()!!
+    }
     suspend fun getActivityById(activityId: String) : GetActivityByIdResponse {
         val response = BingoApi.instance.getActivityById(activityId)
         resInterceptor.interceptError(response)

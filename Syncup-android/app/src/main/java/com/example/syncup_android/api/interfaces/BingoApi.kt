@@ -23,6 +23,10 @@ interface BingoApi {
     suspend fun getSubmissionsForActivity(
     ) : Response<GetSubmissionsForBingoResponse>
 
+    @GET("/feed/submission/mine")
+    suspend fun getSubmissionsForLoggedUser(
+    ) : Response<GetSubmissionsForBingoResponse>
+
     @POST("/feed/submission")
     suspend fun createSubmission(
         @Body body: CreateSubmissionRequest

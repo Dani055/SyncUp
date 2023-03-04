@@ -7,5 +7,6 @@ router.get('/activities',isAuth, feedController.getActivities);
 router.get('/activities/:activityId',isAuth, feedController.getActivityById);
 router.get('/bingo/submissions',isAuth, feedController.getSubmissionsForBingo);
 router.post('/submission',isAuth, feedController.createSubmission);
+router.get('/submission/mine',isAuth, feedController.getSubmissionsForUser);
 
 module.exports = router;

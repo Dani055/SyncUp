@@ -2,6 +2,8 @@ package com.example.syncup_android.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Leaderboard
@@ -9,8 +11,7 @@ import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material.icons.outlined.VideogameAsset
 import androidx.compose.material.icons.outlined.VideogameAssetOff
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -19,6 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import com.example.syncup_android.R
@@ -28,16 +30,32 @@ import com.example.syncup_android.data.UserContext
 import com.example.syncup_android.data.req.CreateSubmissionRequest
 import com.example.syncup_android.ui.components.AchievementCard
 import com.example.syncup_android.ui.components.LeaderboardCard
+import com.example.syncup_android.ui.navigation.NavRoutes
+import com.example.syncup_android.viewmodel.HomeViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen (modifier: Modifier = Modifier){
+fun HomeScreen (modifier: Modifier = Modifier, homeViewModel: HomeViewModel = viewModel()){
     val scope = rememberCoroutineScope()
-    val authRepo = AuthRepository()
+    val homeUIState by homeViewModel.uiState.collectAsState()
+
+    LaunchedEffect(Unit){
+        scope.launch {
+            try {
+                homeViewModel.getLeaderboard()
+            } catch (e: Exception) {
+                (e).printStackTrace()
+            }
+        }
+    }
+
+
 
     Column(modifier = Modifier.fillMaxSize()) {
-        Column(modifier = Modifier.padding(start = 40.dp,end = 40.dp).offset(y = 50.dp)) {
+        Column(modifier = Modifier
+            .padding(start = 40.dp, end = 40.dp)
+            .offset(y = 50.dp)) {
             Row(modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 10.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
@@ -64,12 +82,11 @@ fun HomeScreen (modifier: Modifier = Modifier){
                         Spacer(modifier = Modifier.width(20.dp))
                         AchievementCard(modifier = Modifier.weight(1f),icon = Icons.Outlined.Leaderboard, name = "Position", score = 7)
                     }
-                    Text(modifier = Modifier.padding(start = 5.dp, top = 40.dp, bottom = 12.dp), style = MaterialTheme.typography.titleMedium, text = "Leaderboard")
+                    Text(modifier = Modifier.padding(start = 5.dp, top = 40.dp, bottom = 12.dp), style = MaterialTheme.typography.titleMedium, text = "Leaderboard (${homeUIState.leaderboardSize})")
                     Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.SpaceAround) {
-                        LeaderboardCard(position = 6, user = UserContext.loggedUser!!)
-                        LeaderboardCard(position = 7, user = UserContext.loggedUser!!)
-                        LeaderboardCard(position = 8, user = UserContext.loggedUser!!)
-                        LeaderboardCard(position = 9, user = UserContext.loggedUser!!)
+                        homeUIState.leaderboard.forEach { (key, value) ->
+                            LeaderboardCard(position = key, user = value)
+                        }
                     }
                 }
             }

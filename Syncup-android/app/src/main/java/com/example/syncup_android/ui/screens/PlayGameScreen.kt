@@ -1,22 +1,17 @@
 package com.example.syncup_android.ui.screens
 
-import android.widget.Space
-import androidx.compose.foundation.Image
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.CheckBox
 import androidx.compose.material.icons.outlined.CheckCircleOutline
 import androidx.compose.material3.*
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
@@ -31,30 +26,23 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import coil.compose.rememberAsyncImagePainter
-import com.example.syncup_android.data.UserContext
 import com.example.syncup_android.data.model.Activity
 import com.example.syncup_android.data.model.Submission
 import com.example.syncup_android.ui.navigation.NavRoutes
-import com.example.syncup_android.ui.navigation.SnackbarVisualsWithError
-import com.example.syncup_android.viewmodel.LoginViewModel
 import com.example.syncup_android.viewmodel.PlayBingoViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalPagerApi::class)
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun PlayGameScreen (navController: NavController){
     val pagerState = rememberPagerState()
-    val coroutineScope = rememberCoroutineScope()
     val scope = rememberCoroutineScope()
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -68,14 +56,14 @@ fun PlayGameScreen (navController: NavController){
         ) {
             Tab(
                 selected = pagerState.currentPage == 0,
-                onClick = { coroutineScope.launch { pagerState.animateScrollToPage(0) } },
+                onClick = { scope.launch { pagerState.animateScrollToPage(0) } },
                 text = {
                     Text(text = "Game activities")
                 }
             )
             Tab(
                 selected = pagerState.currentPage == 1,
-                onClick = { coroutineScope.launch { pagerState.animateScrollToPage(1) } },
+                onClick = { scope.launch { pagerState.animateScrollToPage(1) } },
                 text = {
                     Text(text = "Team submissions")
                 }
@@ -183,7 +171,7 @@ fun BingoActivityCard(activity: Activity, index: Int, onAddSubmissionClick: (Str
             Spacer(modifier = Modifier.weight(1f))
             Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 Spacer(modifier = Modifier.weight(1f))
-                ClickableText(style = TextStyle(color = MaterialTheme.colorScheme.primary), text = AnnotatedString("Add"), onClick = {onAddSubmissionClick(activity.id)})
+                ClickableText(style = TextStyle(color = MaterialTheme.colorScheme.primary), text = AnnotatedString("View"), onClick = {onAddSubmissionClick(activity.id)})
             }
         }
     }

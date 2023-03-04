@@ -30,7 +30,7 @@ import com.example.syncup_android.data.model.User
 fun LeaderboardCard (position: Int, user: User){
     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier
         .fillMaxWidth()
-        .background(shape = RoundedCornerShape(15.dp), color = MaterialTheme.colorScheme.onPrimary)
+        .background(shape = RoundedCornerShape(15.dp), color = if(user.id == UserContext.loggedUser?.id) MaterialTheme.colorScheme.outline else MaterialTheme.colorScheme.onPrimary)
         .padding(horizontal = 15.dp, vertical = 10.dp)){
         Text(style = MaterialTheme.typography.titleMedium, text = position.toString())
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(start = 18.dp).weight(1f)) {

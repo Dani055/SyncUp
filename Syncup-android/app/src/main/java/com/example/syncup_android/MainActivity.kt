@@ -1,5 +1,7 @@
 package com.example.syncup_android
 
+import android.content.Context
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.core.content.FileProvider
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -18,6 +21,7 @@ import com.example.syncup_android.permissions.CheckAndRequestCameraPermission
 import com.example.syncup_android.ui.navigation.MainApplicationScaffold
 import com.example.syncup_android.ui.navigation.NavRoutes
 import com.example.syncup_android.ui.theme.SyncupandroidTheme
+import java.io.File
 
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.Q)
@@ -53,4 +57,25 @@ fun SyncupApp(modifier: Modifier = Modifier) {
         navController = navController,
         scope = scope,
     )
+}
+class ComposeFileProvider : FileProvider(
+    R.xml.filepaths
+) {
+    companion object {
+        fun getImageUri(context: Context): Uri {
+            val directory = File(context.cacheDir, "images")
+            directory.mkdirs()
+            val file = File.createTempFile(
+                "selected_image_",
+                ".jpg",
+                directory,
+            )
+            val authority = context.packageName + ".fileprovider"
+            return getUriForFile(
+                context,
+                authority,
+                file,
+            )
+        }
+    }
 }

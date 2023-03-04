@@ -65,6 +65,20 @@ module.exports = {
       next(error);
     }
   },
+  getSubmissionsForUser: async (req, res, next) => {
+    try {
+    let submissions = await Submission.find({completedBy: req.userId}).populate("completedBy").populate("activity")
+      res
+          .status(200)
+          .json({ message: 'Fetched submissions for logged user', submissions });
+      
+    } catch (error) {
+      if (!error.statusCode) {
+        error.statusCode = 500;
+      }
+      next(error);
+    }
+  },
   createSubmission: async (req, res, next) => {
     try {
       const submissionObj = {"evidenceUrl": req.body.evidenceUrl, "activity": req.body.activityId}
