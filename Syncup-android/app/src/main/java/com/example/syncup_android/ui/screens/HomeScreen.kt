@@ -59,7 +59,7 @@ fun HomeScreen (modifier: Modifier = Modifier, homeViewModel: HomeViewModel = vi
             Row(modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 10.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
-                Column() {
+                Column(modifier = Modifier) {
                     Text(style = MaterialTheme.typography.titleLarge, text = "Welcome back, ${UserContext.loggedUser?.firstName}")
                     Text(style = MaterialTheme.typography.bodyMedium, text = "${UserContext.loggedUser?.position}")
                 }

@@ -1,6 +1,5 @@
 package com.example.syncup_android.ui.screens
 
-import android.content.Context
 import android.net.Uri
 import android.webkit.MimeTypeMap
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -20,13 +19,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.FileProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
@@ -122,6 +121,8 @@ fun ActivityDetailsScreen (scope: CoroutineScope, navController: NavController, 
 @Composable
 private fun ImageUploadSection(scope: CoroutineScope, activityDetailsViewModel: ActivityDetailsViewModel, activityId: String, navController: NavController, snackBar: SnackbarHostState){
     val imageUploadRepo = ImageUploadRepository()
+    val haptic = LocalHapticFeedback.current
+
     var hasImage by remember {
         mutableStateOf(false)
     }
@@ -183,6 +184,7 @@ private fun ImageUploadSection(scope: CoroutineScope, activityDetailsViewModel: 
             imageUri = null;
             val uri = ComposeFileProvider.getImageUri(context)
             imageUri = uri
+            haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
             cameraLauncher.launch(uri)
         }) {
             Icon(modifier = Modifier.size(30.dp),tint=MaterialTheme.colorScheme.onPrimary, imageVector = Icons.Outlined.AddAPhoto, contentDescription = "Take picture")
@@ -190,6 +192,7 @@ private fun ImageUploadSection(scope: CoroutineScope, activityDetailsViewModel: 
         IconButton(colors = IconButtonDefaults.filledIconButtonColors(containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.6f)), modifier = Modifier.size(60.dp).clip(CircleShape), onClick = {
             hasImage = false;
             imageUri = null;
+            haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
             imagePicker.launch("image/*")
         }) {
             Icon(modifier = Modifier.size(30.dp),tint=MaterialTheme.colorScheme.onPrimary, imageVector = Icons.Outlined.AddPhotoAlternate, contentDescription = "Choose picture from device")
