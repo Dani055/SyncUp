@@ -2,37 +2,151 @@ package com.example.syncup_android.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.ClickableText
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Leaderboard
+import androidx.compose.material.icons.outlined.StarOutline
+import androidx.compose.material.icons.outlined.VideogameAsset
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.AsyncImage
 import com.example.syncup_android.R
-import com.example.syncup_android.data.User
 import com.example.syncup_android.data.UserContext
-import com.example.syncup_android.viewmodel.LoginViewModel
+import com.example.syncup_android.ui.components.AchievementCard
+import com.example.syncup_android.ui.components.LeaderboardCard
+import com.example.syncup_android.viewmodel.HomeViewModel
+import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
-fun HomeScreen (modifier: Modifier = Modifier){
-    Column() {
-        Text(text = UserContext.loggedUser!!.email)
+fun HomeScreen(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = viewModel()) {
+    val scope = rememberCoroutineScope()
+    val homeUIState by homeViewModel.uiState.collectAsState()
+
+    //Load leaderboard when component is initialized
+    LaunchedEffect(Unit) {
+        scope.launch {
+            try {
+                homeViewModel.getLeaderboard()
+            } catch (e: Exception) {
+                (e).printStackTrace()
+            }
+        }
+    }
+
+
+
+    Column(modifier = Modifier.fillMaxSize()) {
+        Column(modifier = Modifier
+            .padding(start = 40.dp, end = 40.dp)
+            .offset(y = 50.dp)) {
+
+            //Greeting section
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 10.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            )
+            {
+                Column(modifier = Modifier) {
+                    Text(
+                        style = MaterialTheme.typography.titleLarge,
+                        text = "Welcome back, ${UserContext.loggedUser?.firstName}"
+                    )
+                    Text(
+                        style = MaterialTheme.typography.bodyMedium,
+                        text = "${UserContext.loggedUser?.position}"
+                    )
+                }
+                AsyncImage(
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(70.dp)
+                        .clip(CircleShape),
+                    model = UserContext.loggedUser?.profileImageUrl,
+                    contentDescription = "Your profile picture"
+                )
+            }
+        }
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
+            Image(
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop,
+                painter = painterResource(id = R.drawable.mask_group_4_1_1),
+                contentDescription = null
+            )
+            Column(
+                modifier = Modifier.padding(
+                    start = 35.dp,
+                    end = 35.dp,
+                    top = 120.dp,
+                    bottom = 20.dp
+                )
+            ) {
+                Text(
+                    modifier = Modifier.padding(top = 30.dp, bottom = 10.dp),
+                    text = "Your achievements",
+                    style = MaterialTheme.typography.titleMedium
+                )
+                //Row for showing achievements
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 10.dp)
+                ) {
+                    AchievementCard(
+                        modifier = Modifier.weight(1f),
+                        icon = Icons.Outlined.VideogameAsset,
+                        name = "Games played",
+                        score = 5
+                    )
+                    Spacer(modifier = Modifier.width(20.dp))
+                    AchievementCard(
+                        modifier = Modifier.weight(1f),
+                        icon = Icons.Outlined.StarOutline,
+                        name = "Points",
+                        score = UserContext.loggedUser?.points!!
+                    )
+                    Spacer(modifier = Modifier.width(20.dp))
+                    AchievementCard(
+                        modifier = Modifier.weight(1f),
+                        icon = Icons.Outlined.Leaderboard,
+                        name = "Position",
+                        score = 7
+                    )
+                }
+
+                //Leaderboard section
+                Text(
+                    modifier = Modifier.padding(start = 5.dp, top = 40.dp, bottom = 12.dp),
+                    style = MaterialTheme.typography.titleMedium,
+                    text = "Leaderboard (${homeUIState.leaderboardSize})"
+                )
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.SpaceAround
+                ) {
+                    homeUIState.leaderboard.forEach { (key, value) ->
+                        LeaderboardCard(position = key, user = value)
+                    }
+                }
+            }
+        }
+
+
     }
 }
 

@@ -5,7 +5,7 @@ const Activity = require('../models/Activity');
 mongoose.Promise = global.Promise;
 module.exports = () => {
     let conString = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.guudf9c.mongodb.net/Syncup`
-    mongoose.set("strictQuery", true);
+    mongoose.set("strictQuery", false);
     mongoose.connect(conString, {
         useNewUrlParser: true,
         useUnifiedTopology: true ,

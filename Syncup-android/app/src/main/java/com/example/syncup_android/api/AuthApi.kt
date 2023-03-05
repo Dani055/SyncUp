@@ -43,7 +43,7 @@ interface AuthApi {
             .build()
 
         val instance by lazy {
-            Retrofit.Builder().baseUrl(ApiConstants.BASE_URL).addConverterFactory(
+            Retrofit.Builder().baseUrl(ApiConstants.BASE_URL_BACKEND).addConverterFactory(
                 JacksonConverterFactory.create()).build().create(AuthApi::class.java)
         }
     }

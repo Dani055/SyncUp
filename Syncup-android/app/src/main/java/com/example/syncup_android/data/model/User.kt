@@ -1,4 +1,4 @@
-package com.example.syncup_android.data
+package com.example.syncup_android.data.model
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
@@ -11,6 +11,8 @@ data class User(
     val email: String,
     @JsonProperty("firstName")
     val firstName: String,
+    @JsonProperty("position")
+    val position: String,
     @JsonProperty("lastName")
     val lastName: String,
     @JsonProperty("profileImageUrl")

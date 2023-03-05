@@ -1,6 +1,6 @@
 package com.example.syncup_android.data.res
 
-import com.example.syncup_android.data.User
+import com.example.syncup_android.data.model.User
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class SignInResponse(
