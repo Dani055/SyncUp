@@ -1,10 +1,7 @@
 package com.example.syncup_android.ui.screens
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.*
@@ -19,7 +16,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.syncup_android.R
-import com.example.syncup_android.api.repository.BingoRepository
 import com.example.syncup_android.data.onboardPages
 import com.example.syncup_android.ui.components.OnboardingPageUI
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -30,30 +26,62 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun OnboardingScreen (onGetStartedClick: () -> Unit, modifier: Modifier = Modifier){
+fun OnboardingScreen(onGetStartedClick: () -> Unit, modifier: Modifier = Modifier) {
     val pagerState = rememberPagerState(initialPage = 0);
     val scope = rememberCoroutineScope();
 
     Column(modifier = modifier.fillMaxSize()) {
-        Image(modifier = Modifier.fillMaxWidth(),contentScale = ContentScale.Crop, painter = painterResource(R.drawable.onboardingbg), contentDescription = null)
+        Image(
+            modifier = Modifier.fillMaxWidth(),
+            contentScale = ContentScale.Crop,
+            painter = painterResource(R.drawable.onboardingbg),
+            contentDescription = null
+        )
         HorizontalPager(count = 3, state = pagerState, modifier = Modifier.fillMaxWidth()) {
             OnboardingPageUI(onboardingPage = onboardPages[it])
         }
         Spacer(Modifier.weight(1f))
-        HorizontalPagerIndicator(modifier = Modifier.align(Alignment.CenterHorizontally), pagerState = pagerState, activeColor = MaterialTheme.colorScheme.primary)
+
+        //Indicators for the pages
+        HorizontalPagerIndicator(
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            pagerState = pagerState,
+            activeColor = MaterialTheme.colorScheme.primary
+        )
         Spacer(Modifier.weight(1f))
+
+        //Buttons for skip and next, only shown in the first 2 screens
         AnimatedVisibility(visible = pagerState.currentPage < 2) {
-            Row(modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 50.dp, end = 50.dp, bottom = 20.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                    ClickableText(modifier = Modifier.padding(bottom = 20.dp), style = TextStyle(color = MaterialTheme.colorScheme.primary), text = AnnotatedString("Skip"), onClick = {onGetStartedClick()})
-                    ClickableText(modifier = Modifier.padding(bottom = 20.dp), style = TextStyle(color = MaterialTheme.colorScheme.primary), text = AnnotatedString("Next"), onClick = {scope.launch { pagerState.animateScrollToPage(pagerState.currentPage + 1)} })
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 50.dp, end = 50.dp, bottom = 20.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                ClickableText(
+                    modifier = Modifier.padding(bottom = 20.dp),
+                    style = TextStyle(color = MaterialTheme.colorScheme.primary),
+                    text = AnnotatedString("Skip"),
+                    onClick = { onGetStartedClick() })
+                ClickableText(
+                    modifier = Modifier.padding(bottom = 20.dp),
+                    style = TextStyle(color = MaterialTheme.colorScheme.primary),
+                    text = AnnotatedString("Next"),
+                    onClick = { scope.launch { pagerState.animateScrollToPage(pagerState.currentPage + 1) } })
             }
         }
+
+        //Button to get started
         AnimatedVisibility(visible = pagerState.currentPage == 2) {
-            OutlinedButton(colors = ButtonDefaults.outlinedButtonColors(containerColor = MaterialTheme.colorScheme.primary, contentColor = MaterialTheme.colorScheme.onPrimary), modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 50.dp, end = 50.dp, bottom = 20.dp), onClick = {onGetStartedClick()}){
+            OutlinedButton(colors = ButtonDefaults.outlinedButtonColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary
+            ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 50.dp, end = 50.dp, bottom = 20.dp),
+                onClick = { onGetStartedClick() }) {
                 Text(text = "Get started")
             }
         }

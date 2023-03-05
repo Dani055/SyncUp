@@ -20,9 +20,10 @@ fun NavGraph(modifier: Modifier = Modifier, navController: NavHostController, in
     NavHost(
         modifier = Modifier.padding(paddingValues = innerPadding),
         navController = navController,
-        startDestination = NavRoutes.Login.name
+        startDestination = NavRoutes.Onboarding.name
     )
     {
+        //All routes of the app
         composable(route = NavRoutes.Onboarding.name) {
             OnboardingScreen(onGetStartedClick = {navController.navigate(NavRoutes.Login.name)})
         }

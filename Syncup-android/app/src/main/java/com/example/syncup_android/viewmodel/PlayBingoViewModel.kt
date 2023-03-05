@@ -1,12 +1,9 @@
 package com.example.syncup_android.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.example.syncup_android.api.repository.AuthRepository
 import com.example.syncup_android.api.repository.BingoRepository
 import com.example.syncup_android.data.model.Activity
 import com.example.syncup_android.data.model.Submission
-import com.example.syncup_android.data.res.SignInResponse
-import com.example.syncup_android.state.LoginUIState
 import com.example.syncup_android.state.PlayBingoState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

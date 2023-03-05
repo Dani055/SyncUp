@@ -17,7 +17,6 @@ import androidx.core.content.FileProvider
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.syncup_android.permissions.CheckAndRequestCameraPermission
 import com.example.syncup_android.ui.navigation.MainApplicationScaffold
 import com.example.syncup_android.ui.navigation.NavRoutes
 import com.example.syncup_android.ui.theme.SyncupandroidTheme
@@ -58,6 +57,8 @@ fun SyncupApp(modifier: Modifier = Modifier) {
         scope = scope,
     )
 }
+
+//File provider for jetpack compose to access the temporary images when creating a submission
 class ComposeFileProvider : FileProvider(
     R.xml.filepaths
 ) {

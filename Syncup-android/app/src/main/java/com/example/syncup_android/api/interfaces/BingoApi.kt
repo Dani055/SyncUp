@@ -14,6 +14,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 
+//Builder for the Bingo API
 interface BingoApi {
     @GET("/feed/activities")
     suspend fun getActivities(
@@ -38,6 +39,7 @@ interface BingoApi {
     ) : Response<GetActivityByIdResponse>
 
     companion object{
+        //An interceptor that attaches the user's ID as a bearer token on each request
         val client = OkHttpClient.Builder()
             .addInterceptor(object : Interceptor {
                 override fun intercept(chain: Interceptor.Chain): okhttp3.Response {

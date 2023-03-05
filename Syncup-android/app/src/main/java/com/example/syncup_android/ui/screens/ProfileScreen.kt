@@ -2,7 +2,6 @@ package com.example.syncup_android.ui.screens
 
 import android.content.Context
 import android.content.Intent
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -24,7 +23,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -32,17 +30,21 @@ import coil.compose.AsyncImage
 import com.example.syncup_android.data.UserContext
 import com.example.syncup_android.data.model.Submission
 import com.example.syncup_android.ui.navigation.NavRoutes
-import com.example.syncup_android.viewmodel.HomeViewModel
 import com.example.syncup_android.viewmodel.ProfileViewModel
 import kotlinx.coroutines.launch
 
 @Composable
-fun ProfileScreen (navController: NavController, modifier: Modifier = Modifier, profileViewModel: ProfileViewModel = viewModel()){
+fun ProfileScreen(
+    navController: NavController,
+    modifier: Modifier = Modifier,
+    profileViewModel: ProfileViewModel = viewModel()
+) {
     val scope = rememberCoroutineScope()
     val profileUiState by profileViewModel.uiState.collectAsState()
     val context = LocalContext.current
 
-    LaunchedEffect(Unit){
+    //Load user's submissions when component is initialized
+    LaunchedEffect(Unit) {
         scope.launch {
             try {
                 profileViewModel.loadMySubmissions()
@@ -52,74 +54,137 @@ fun ProfileScreen (navController: NavController, modifier: Modifier = Modifier, 
         }
     }
 
-    Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter){
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 100.dp)
-            .background(
-                color = MaterialTheme.colorScheme.secondary,
-                shape = RoundedCornerShape(50.dp, 50.dp)
-            )) {
-            
+    Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 100.dp)
+                .background(
+                    color = MaterialTheme.colorScheme.secondary,
+                    shape = RoundedCornerShape(50.dp, 50.dp)
+                )
+        ) {
+
         }
-        AsyncImage(contentScale = ContentScale.Crop, modifier = Modifier
-            .padding(top = 25.dp)
-            .size(150.dp)
-            .clip(CircleShape), model = UserContext.loggedUser?.profileImageUrl, contentDescription = "Your profile picture")
-        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 190.dp, start = 27.dp, end = 27.dp, bottom = 27.dp)) {
+        AsyncImage(
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .padding(top = 25.dp)
+                .size(150.dp)
+                .clip(CircleShape),
+            model = UserContext.loggedUser?.profileImageUrl,
+            contentDescription = "Your profile picture"
+        )
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 190.dp, start = 27.dp, end = 27.dp, bottom = 27.dp)
+        ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(style = MaterialTheme.typography.titleMedium, text = "My profile")
-                Icon(modifier = Modifier.padding(start = 11.dp), imageVector = Icons.Outlined.Edit, contentDescription = "Edit your profile")
+                Icon(
+                    modifier = Modifier.padding(start = 11.dp),
+                    imageVector = Icons.Outlined.Edit,
+                    contentDescription = "Edit your profile"
+                )
             }
 
-            Row(horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically, modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 25.dp)
-                .background(
-                    color = MaterialTheme.colorScheme.onPrimary,
-                    shape = RoundedCornerShape(15.dp)
-                )) {
+            //User name field
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 25.dp)
+                    .background(
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        shape = RoundedCornerShape(15.dp)
+                    )
+            ) {
                 Row(Modifier.padding(start = 12.dp, top = 12.dp, bottom = 12.dp)) {
-                    Icon(modifier = Modifier.padding(end = 15.dp), tint = Color(0xFF9A9A9A), imageVector = Icons.Outlined.Person, contentDescription = null)
+                    Icon(
+                        modifier = Modifier.padding(end = 15.dp),
+                        tint = Color(0xFF9A9A9A),
+                        imageVector = Icons.Outlined.Person,
+                        contentDescription = null
+                    )
                     Text(color = Color(0xFF9A9A9A), text = "Name")
                 }
-                Text(modifier = Modifier.padding(end = 25.dp), text = "${UserContext.loggedUser?.firstName} ${UserContext.loggedUser?.lastName}")
+                Text(
+                    modifier = Modifier.padding(end = 25.dp),
+                    text = "${UserContext.loggedUser?.firstName} ${UserContext.loggedUser?.lastName}"
+                )
             }
-            Row(horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically, modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 15.dp)
-                .background(
-                    color = MaterialTheme.colorScheme.onPrimary,
-                    shape = RoundedCornerShape(15.dp)
-                )) {
+
+            //User email field
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 15.dp)
+                    .background(
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        shape = RoundedCornerShape(15.dp)
+                    )
+            ) {
                 Row(Modifier.padding(start = 12.dp, top = 12.dp, bottom = 12.dp)) {
-                    Icon(modifier = Modifier.padding(end = 15.dp), tint = Color(0xFF9A9A9A), imageVector = Icons.Outlined.Mail, contentDescription = null)
+                    Icon(
+                        modifier = Modifier.padding(end = 15.dp),
+                        tint = Color(0xFF9A9A9A),
+                        imageVector = Icons.Outlined.Mail,
+                        contentDescription = null
+                    )
                     Text(color = Color(0xFF9A9A9A), text = "Email")
                 }
-                Text(modifier = Modifier.padding(end = 25.dp), text = "${UserContext.loggedUser?.email}")
+                Text(
+                    modifier = Modifier.padding(end = 25.dp),
+                    text = "${UserContext.loggedUser?.email}"
+                )
             }
-            Row(horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically, modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 15.dp)
-                .background(
-                    color = MaterialTheme.colorScheme.onPrimary,
-                    shape = RoundedCornerShape(15.dp)
-                )) {
+
+            ////User date of birth field
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 15.dp)
+                    .background(
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        shape = RoundedCornerShape(15.dp)
+                    )
+            ) {
                 Row(Modifier.padding(start = 12.dp, top = 12.dp, bottom = 12.dp)) {
-                    Icon(modifier = Modifier.padding(end = 15.dp), tint = Color(0xFF9A9A9A), imageVector = Icons.Outlined.Cake, contentDescription = null)
+                    Icon(
+                        modifier = Modifier.padding(end = 15.dp),
+                        tint = Color(0xFF9A9A9A),
+                        imageVector = Icons.Outlined.Cake,
+                        contentDescription = null
+                    )
                     Text(color = Color(0xFF9A9A9A), text = "Date of birth")
                 }
                 Text(modifier = Modifier.padding(end = 25.dp), text = "24 May 1997")
             }
-            
-            Text(modifier = Modifier.padding(top = 28.dp, bottom = 10.dp), style = MaterialTheme.typography.titleMedium, text = "My submissions")
-            LazyRow(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(11.dp)){
-                itemsIndexed(profileUiState.mySubmissions){index, item ->  
+
+
+            Text(
+                modifier = Modifier.padding(top = 28.dp, bottom = 10.dp),
+                style = MaterialTheme.typography.titleMedium,
+                text = "My submissions"
+            )
+
+            //Display submissions in a scrollable row
+            LazyRow(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(11.dp)
+            ) {
+                itemsIndexed(profileUiState.mySubmissions) { index, item ->
                     MySubmissionShareCard(submission = item, context)
                 }
             }
+
+            //Button to log out
             Button(modifier = Modifier
                 .width(150.dp)
                 .padding(top = 36.dp), onClick = {
@@ -135,16 +200,37 @@ fun ProfileScreen (navController: NavController, modifier: Modifier = Modifier, 
 }
 
 @Composable
-fun MySubmissionShareCard(submission: Submission, context: Context){
+fun MySubmissionShareCard(submission: Submission, context: Context) {
     Box(contentAlignment = Alignment.TopEnd, modifier = Modifier
-        .clip(RoundedCornerShape(15.dp)).clickable(onClick = {
+        .clip(RoundedCornerShape(15.dp))
+        .clickable(onClick = {
             shareSubmission(context, submission)
-        })){
-        AsyncImage(contentScale = ContentScale.Crop, modifier = Modifier.width(140.dp).height(100.dp), model = submission.evidenceUrl, contentDescription = submission.activity.description)
-        IconButton(colors = IconButtonDefaults.filledIconButtonColors(containerColor = Color.Black.copy(alpha = 0.6f)), modifier = Modifier.padding(top = 8.dp, end = 8.dp).size(20.dp).clip(
-            RoundedCornerShape(25.dp)
-        ), onClick = { shareSubmission(context, submission) }) {
-            Icon(tint = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(15.dp), imageVector = Icons.Default.Share, contentDescription = "Share submission")
+        })
+    ) {
+        AsyncImage(
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .width(140.dp)
+                .height(100.dp),
+            model = submission.evidenceUrl,
+            contentDescription = submission.activity.description
+        )
+        IconButton(colors = IconButtonDefaults.filledIconButtonColors(
+            containerColor = Color.Black.copy(
+                alpha = 0.6f
+            )
+        ), modifier = Modifier
+            .padding(top = 8.dp, end = 8.dp)
+            .size(20.dp)
+            .clip(
+                RoundedCornerShape(25.dp)
+            ), onClick = { shareSubmission(context, submission) }) {
+            Icon(
+                tint = MaterialTheme.colorScheme.onPrimary,
+                modifier = Modifier.size(15.dp),
+                imageVector = Icons.Default.Share,
+                contentDescription = "Share submission"
+            )
         }
     }
 }

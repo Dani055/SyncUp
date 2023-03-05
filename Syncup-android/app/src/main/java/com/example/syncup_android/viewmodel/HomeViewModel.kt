@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import com.example.syncup_android.api.repository.AuthRepository
 import com.example.syncup_android.data.UserContext
 import com.example.syncup_android.data.model.User
-import com.example.syncup_android.data.res.GetLeaderboardResponse
 import com.example.syncup_android.state.HomeUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

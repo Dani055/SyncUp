@@ -1,12 +1,12 @@
 package com.example.syncup_android.api.repository
 
-
 import com.example.syncup_android.api.ResponseInterceptor
 import com.example.syncup_android.api.interfaces.BingoApi
 import com.example.syncup_android.data.req.CreateSubmissionRequest
-import com.example.syncup_android.data.res.*
-import org.json.JSONObject
-import retrofit2.Response
+import com.example.syncup_android.data.res.CreateSubmissionResponse
+import com.example.syncup_android.data.res.GetActivitiesResponse
+import com.example.syncup_android.data.res.GetActivityByIdResponse
+import com.example.syncup_android.data.res.GetSubmissionsForBingoResponse
 
 class BingoRepository(private val resInterceptor: ResponseInterceptor = ResponseInterceptor()){
     suspend fun getActivities() : GetActivitiesResponse {

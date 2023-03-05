@@ -2,11 +2,9 @@ package com.example.syncup_android.api.repository
 
 import com.example.syncup_android.api.ResponseInterceptor
 import com.example.syncup_android.api.interfaces.AuthApi
-import com.example.syncup_android.data.res.SignInResponse
 import com.example.syncup_android.data.req.SignInRequest
 import com.example.syncup_android.data.res.GetLeaderboardResponse
-import org.json.JSONObject
-import retrofit2.Response
+import com.example.syncup_android.data.res.SignInResponse
 
 class AuthRepository (private val resInterceptor: ResponseInterceptor = ResponseInterceptor()){
     suspend fun login(username: String) : SignInResponse {

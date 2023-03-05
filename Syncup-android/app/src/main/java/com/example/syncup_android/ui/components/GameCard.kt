@@ -15,12 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import coil.compose.rememberAsyncImagePainter
 import com.example.syncup_android.R
-import com.example.syncup_android.data.UserContext
-import com.example.syncup_android.ui.navigation.SnackbarVisualsWithError
-import com.example.syncup_android.ui.screens.GamesScreen
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

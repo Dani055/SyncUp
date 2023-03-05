@@ -16,6 +16,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 
 
+//Builder for the authentication API
 interface AuthApi {
     @POST("/auth/signin")
     suspend fun signIn(
@@ -26,26 +27,6 @@ interface AuthApi {
     ) : Response<GetLeaderboardResponse>
 
     companion object{
-        val client = OkHttpClient.Builder()
-            .addInterceptor(object : Interceptor {
-                override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
-                    val request = chain.request()
-                    val response = chain.proceed(request)
-                    if(!response.isSuccessful){
-                        val jObjError = JSONObject(response.body?.string())
-                        val message = jObjError.get("message").toString()
-                        return response.newBuilder()
-                            .body((response.body?.string() ?: "").toResponseBody(response.body?.contentType()))
-                            .build()
-                    }
-
-                    // Return a new response with the modified body
-                    return response.newBuilder()
-                        .body((response.body?.string() ?: "").toResponseBody(response.body?.contentType()))
-                        .build()
-                }
-            })
-            .build()
 
         val instance by lazy {
             Retrofit.Builder().baseUrl(ApiConstants.BASE_URL_BACKEND).addConverterFactory(

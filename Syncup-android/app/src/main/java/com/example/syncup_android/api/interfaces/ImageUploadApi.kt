@@ -10,6 +10,7 @@ import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
 
+//Builder for the API that uploads images
 interface ImageUploadApi {
     @Multipart
     @POST("uploadimg")

@@ -5,6 +5,7 @@ import org.json.JSONObject
 import retrofit2.Response
 
 class ResponseInterceptor: IResponseInterceptor {
+    //Interceptor that takes a response and in case it is an error, throws an exception with the response message.
     override fun <T: Any>interceptError(response: Response<T>){
         if(!response.isSuccessful){
             val jObjError = JSONObject(response.errorBody()?.string())
