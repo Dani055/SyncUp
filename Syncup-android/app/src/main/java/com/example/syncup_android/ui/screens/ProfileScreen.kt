@@ -189,6 +189,7 @@ fun ProfileScreen(
                 .width(150.dp)
                 .padding(top = 36.dp), onClick = {
                 scope.launch {
+                    navController.popBackStack(NavRoutes.Login.name, false)
                     navController.navigate(NavRoutes.Login.name)
                     UserContext.logout()
                 }

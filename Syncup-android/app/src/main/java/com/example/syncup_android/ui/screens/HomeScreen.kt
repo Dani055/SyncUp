@@ -4,9 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Leaderboard
-import androidx.compose.material.icons.outlined.StarOutline
-import androidx.compose.material.icons.outlined.VideogameAsset
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -123,9 +121,9 @@ fun HomeScreen(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = vie
                     Spacer(modifier = Modifier.width(20.dp))
                     AchievementCard(
                         modifier = Modifier.weight(1f),
-                        icon = Icons.Outlined.Leaderboard,
-                        name = "Position",
-                        score = 7
+                        icon = Icons.Outlined.Schedule,
+                        name = "Hours played",
+                        score = 21
                     )
                 }
 
