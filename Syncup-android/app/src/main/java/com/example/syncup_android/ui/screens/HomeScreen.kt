@@ -2,7 +2,9 @@ package com.example.syncup_android.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
@@ -103,24 +105,25 @@ fun HomeScreen(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = vie
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .heightIn(0.dp, 125.dp)
                         .padding(top = 10.dp)
                 ) {
                     AchievementCard(
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier.weight(1f).fillMaxHeight(),
                         icon = Icons.Outlined.VideogameAsset,
                         name = "Games played",
                         score = 5
                     )
                     Spacer(modifier = Modifier.width(20.dp))
                     AchievementCard(
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier.weight(1f).fillMaxHeight(),
                         icon = Icons.Outlined.StarOutline,
                         name = "Points",
                         score = UserContext.loggedUser?.points!!
                     )
                     Spacer(modifier = Modifier.width(20.dp))
                     AchievementCard(
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier.weight(1f).fillMaxHeight(),
                         icon = Icons.Outlined.Schedule,
                         name = "Hours played",
                         score = 21
@@ -133,8 +136,11 @@ fun HomeScreen(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = vie
                     style = MaterialTheme.typography.titleMedium,
                     text = "Leaderboard (${homeUIState.leaderboardSize})"
                 )
+
                 Column(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState()),
                     verticalArrangement = Arrangement.SpaceAround
                 ) {
                     homeUIState.leaderboard.forEach { (key, value) ->
