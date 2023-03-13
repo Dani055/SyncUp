@@ -58,7 +58,7 @@ fun HomeScreen(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = vie
                 horizontalArrangement = Arrangement.SpaceBetween
             )
             {
-                Column(modifier = Modifier) {
+                Column(modifier = Modifier.weight(1f)) {
                     Text(
                         style = MaterialTheme.typography.titleLarge,
                         text = "Welcome back, ${UserContext.loggedUser?.firstName}"
@@ -68,14 +68,17 @@ fun HomeScreen(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = vie
                         text = "${UserContext.loggedUser?.position}"
                     )
                 }
-                AsyncImage(
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .size(70.dp)
-                        .clip(CircleShape),
-                    model = UserContext.loggedUser?.profileImageUrl,
-                    contentDescription = "Your profile picture"
-                )
+                Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.End) {
+                    AsyncImage(
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .size(70.dp)
+                            .clip(CircleShape),
+                        model = UserContext.loggedUser?.profileImageUrl,
+                        contentDescription = "Your profile picture"
+                    )
+                }
+
             }
         }
         Box(
@@ -109,21 +112,27 @@ fun HomeScreen(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = vie
                         .padding(top = 10.dp)
                 ) {
                     AchievementCard(
-                        modifier = Modifier.weight(1f).fillMaxHeight(),
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight(),
                         icon = Icons.Outlined.VideogameAsset,
                         name = "Games played",
                         score = 5
                     )
                     Spacer(modifier = Modifier.width(20.dp))
                     AchievementCard(
-                        modifier = Modifier.weight(1f).fillMaxHeight(),
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight(),
                         icon = Icons.Outlined.StarOutline,
                         name = "Points",
                         score = UserContext.loggedUser?.points!!
                     )
                     Spacer(modifier = Modifier.width(20.dp))
                     AchievementCard(
-                        modifier = Modifier.weight(1f).fillMaxHeight(),
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight(),
                         icon = Icons.Outlined.Schedule,
                         name = "Hours played",
                         score = 21
@@ -132,7 +141,7 @@ fun HomeScreen(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = vie
 
                 //Leaderboard section
                 Text(
-                    modifier = Modifier.padding(start = 5.dp, top = 40.dp, bottom = 12.dp),
+                    modifier = Modifier.padding(start = 5.dp, top = 27.dp, bottom = 10.dp),
                     style = MaterialTheme.typography.titleMedium,
                     text = "Leaderboard (${homeUIState.leaderboardSize})"
                 )
