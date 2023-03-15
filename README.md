@@ -3,12 +3,21 @@
 - Team members: Nikoleta, Yordan
 - Case 5: Efficient remote working
 
-## This is the first duo app of the semester, developed on android
-
 ## Technologies
-- Jetpack Compose
+- Android Jetpack Compose
 - NodeJS
 - MongoDB
+
+## Installation
+### NodeJS
+- You need a MongoDB database and a .env file with two variables - DB_USERNAME="{YOUR DATABASE USERNAME}" and DB_PASSWORD="{YOUR DATABASE PASSWORD}"
+- cmd and type "npm install"
+- cmd and type "node index"
+- server will start
+
+### Android client
+- Open project with Android studio
+- Run project on emulator
 
 ## Features
  - Login (only email is needed, authentication is skipped for the sake of proof of concept)

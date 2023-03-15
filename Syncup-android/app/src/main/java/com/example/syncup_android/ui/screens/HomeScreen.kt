@@ -2,11 +2,11 @@ package com.example.syncup_android.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Leaderboard
-import androidx.compose.material.icons.outlined.StarOutline
-import androidx.compose.material.icons.outlined.VideogameAsset
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -58,7 +58,7 @@ fun HomeScreen(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = vie
                 horizontalArrangement = Arrangement.SpaceBetween
             )
             {
-                Column(modifier = Modifier) {
+                Column(modifier = Modifier.weight(1f)) {
                     Text(
                         style = MaterialTheme.typography.titleLarge,
                         text = "Welcome back, ${UserContext.loggedUser?.firstName}"
@@ -68,14 +68,17 @@ fun HomeScreen(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = vie
                         text = "${UserContext.loggedUser?.position}"
                     )
                 }
-                AsyncImage(
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .size(70.dp)
-                        .clip(CircleShape),
-                    model = UserContext.loggedUser?.profileImageUrl,
-                    contentDescription = "Your profile picture"
-                )
+                Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.End) {
+                    AsyncImage(
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .size(70.dp)
+                            .clip(CircleShape),
+                        model = UserContext.loggedUser?.profileImageUrl,
+                        contentDescription = "Your profile picture"
+                    )
+                }
+
             }
         }
         Box(
@@ -105,38 +108,48 @@ fun HomeScreen(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = vie
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .heightIn(0.dp, 125.dp)
                         .padding(top = 10.dp)
                 ) {
                     AchievementCard(
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight(),
                         icon = Icons.Outlined.VideogameAsset,
                         name = "Games played",
                         score = 5
                     )
                     Spacer(modifier = Modifier.width(20.dp))
                     AchievementCard(
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight(),
                         icon = Icons.Outlined.StarOutline,
                         name = "Points",
                         score = UserContext.loggedUser?.points!!
                     )
                     Spacer(modifier = Modifier.width(20.dp))
                     AchievementCard(
-                        modifier = Modifier.weight(1f),
-                        icon = Icons.Outlined.Leaderboard,
-                        name = "Position",
-                        score = 7
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight(),
+                        icon = Icons.Outlined.Schedule,
+                        name = "Hours played",
+                        score = 21
                     )
                 }
 
                 //Leaderboard section
                 Text(
-                    modifier = Modifier.padding(start = 5.dp, top = 40.dp, bottom = 12.dp),
+                    modifier = Modifier.padding(start = 5.dp, top = 27.dp, bottom = 10.dp),
                     style = MaterialTheme.typography.titleMedium,
                     text = "Leaderboard (${homeUIState.leaderboardSize})"
                 )
+
                 Column(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState()),
                     verticalArrangement = Arrangement.SpaceAround
                 ) {
                     homeUIState.leaderboard.forEach { (key, value) ->

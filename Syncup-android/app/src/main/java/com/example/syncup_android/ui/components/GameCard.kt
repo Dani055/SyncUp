@@ -31,7 +31,7 @@ fun GameCard (gameName: String, @DrawableRes image: Int, lastUpdated: String, de
                     .fillMaxWidth()
                     .padding(vertical = 10.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
                     Text(style = MaterialTheme.typography.titleMedium, text = gameName)
-                    Text(fontSize = 9.sp, text = lastUpdated)
+                    Text(modifier = Modifier.padding(start = 12.dp), lineHeight = 11.sp, fontSize = 9.sp, text = lastUpdated)
                 }
                 Text(style = MaterialTheme.typography.bodyMedium, text = description)
                 Row(modifier = Modifier
