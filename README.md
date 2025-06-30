@@ -1,14 +1,7 @@
-# Semester 4 Duo application
-
-- Team members: Nikoleta, Yordan
-- Case 5: Efficient remote working
-
-## Technologies
-- Android Jetpack Compose
-- NodeJS
-- MongoDB
+SyncUp is an Android app built with Jetpack compose meant to bring colleagues closer together by letting them play games of bingo.
 
 ## Installation
+The app features a very minimalistic ExpressJS backend for the purposes of persisting data.
 ### NodeJS
 - You need a MongoDB database and a .env file with two variables - DB_USERNAME="{YOUR DATABASE USERNAME}" and DB_PASSWORD="{YOUR DATABASE PASSWORD}"
 - cmd and type "npm install"
