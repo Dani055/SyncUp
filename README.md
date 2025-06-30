@@ -1,5 +1,7 @@
 SyncUp is an Android app built with Jetpack compose meant to bring colleagues closer together by letting them play games of bingo.
 
+![home page screenshot](./Screenshots/Home%20page.png)
+
 ## Installation
 The app features a very minimalistic ExpressJS backend for the purposes of persisting data.
 ### NodeJS
