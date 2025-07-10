@@ -1,5 +1,6 @@
 SyncUp is an Android app built with Jetpack compose meant to bring remote colleagues closer together by letting them play games of bingo.
 
+<img src="./Screenshots/Home%20page.png" alt="home page screenshot" width="300"/>
 ![home page screenshot](./Screenshots/Home%20page.png)
 
 ## Installation
